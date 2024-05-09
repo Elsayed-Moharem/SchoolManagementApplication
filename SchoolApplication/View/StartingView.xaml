@@ -1,0 +1,179 @@
+﻿<Window x:Class="SchoolApplication.View.StartingView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolApplication.View"
+        xmlns:VM ="clr-namespace:SchoolApplication.ViewModel"
+        mc:Ignorable="d"
+        Title="StartingView" Height="550" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown"
+        Background="Transparent"
+        AllowsTransparency="True"
+        >
+    <!--<Window.Resources>
+        <VM:StartingViewModel x:Key="_StartingViewModel"></VM:StartingViewModel>
+
+    </Window.Resources>-->
+    
+    
+
+    <Border CornerRadius="12">
+        <Border.Background>
+            <ImageBrush ImageSource="/Image/back.jpg"  Stretch="Fill"/>
+        </Border.Background>
+        
+        <Border CornerRadius="10"                    
+                BorderThickness="2"
+                 Opacity="0.75">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="WhiteSmoke" Offset="0"/>
+                    <GradientStop Color="GhostWhite" Offset="0.75"/>
+                    <GradientStop Color="Black" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            
+            
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="White" Offset="0.05"/>
+                    <GradientStop Color="#eee" Offset=".5"/>
+                    <GradientStop Color="Silver" Offset="1.2"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="WELCOM Starting View"
+                       Foreground="Black"
+                       FontSize="15"
+                       FontFamily="Montserrat"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="10,0,0,0"/>
+
+                    <Button x:Name="btnMinimize"                           
+                    BorderThickness="0"
+                    Content="-"
+                    Foreground="Black"
+                    FontSize="16"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Grid.Column="1"
+                     Command="{Binding btnMinimize_Click}"
+                    Style="{StaticResource Button_mini }">
+
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="18" Height="18"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button x:Name="btnClose"                          
+                        BorderThickness="0"
+                        Content="X"
+                        Foreground="Black"
+                        FontSize="12"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Grid.Column="2"
+                        Command="{Binding btnClose_Click}"
+                        Style="{StaticResource Button_O-C}">
+
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="18" Height="18"
+                                    CornerRadius="12"
+                                    Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+
+                    </Button>
+                </Grid>
+
+                <StackPanel Width="220"
+                    Grid.Row="1"
+                    Orientation="Vertical"
+                    Margin="511,168,65,0">
+                    <Image Source="/Image/MainLogo.png"
+                   Width="200" Height="100"/>
+                    
+
+                    <TextBlock Text="Welcom To My Project"
+                       Foreground="Black"
+                       FontSize="21"
+                       FontWeight="Medium"
+                       FontFamily="Montserrat"
+                       HorizontalAlignment="Center"/>
+
+                    <Button x:Name="btnStart"                          
+                        Content="Start"
+                        Command="{Binding btnStart_Click}"
+                        Foreground="White"
+                        FontSize="20"
+                        FontFamily="Montserrat"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0,120,0,20"
+                        Width="auto">
+
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                     <Border Width="180" Height="50" BorderThickness="5"
+                                        CornerRadius="30"
+                                        Background="#FF393028">
+                                         <ContentPresenter VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                     </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Silver"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        
+                        
+                        
+                        
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

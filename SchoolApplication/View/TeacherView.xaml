@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="SchoolApplication.View.TeacherView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SchoolApplication.View"
+             xmlns:VM="clr-namespace:SchoolApplication.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="750">
+
+    <Border CornerRadius="12">
+
+        <Border CornerRadius="10"                    
+        BorderThickness="2"
+        Opacity="1">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="WhiteSmoke" Offset="0"/>
+                    <GradientStop Color="GhostWhite" Offset="0.75"/>
+                    <GradientStop Color="Black" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="White" Offset="0.05"/>
+                    <GradientStop Color="#eee" Offset=".5"/>
+                    <GradientStop Color="Silver" Offset="1.2"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+
+
+            <StackPanel >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".2*"></ColumnDefinition>
+                        <ColumnDefinition Width=".8*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <Border BorderThickness="0 0 2 0" BorderBrush="Silver" Height="auto">
+
+                            <StackPanel Height="498">
+
+                                <Label Name="T_Name" Content="Teacher Name" Margin="0 0 0 5"></Label>
+                                <TextBox Name="TI_name" Text="{Binding TI_name, Mode=TwoWay}" Margin="0 0 0 10"></TextBox>
+
+                                <!--<Label Name="T_ID" Content="Teacher ID" Margin="0 0 0 5"></Label>
+                                <TextBox Name="TI_ID" Text="{Binding TI_ID, Mode=TwoWay}" Margin="0 0 0 10"></TextBox>-->
+
+                                <Label Name="T_Salary" Content="Teacher Salary" Margin="0 0 0 5"></Label>
+                                <TextBox Name="TI_Salary" Text="{Binding TI_Salary, Mode=TwoWay}" Margin="0 0 0 10"></TextBox>
+
+                                <Label Name="T_Mail" Content="Teacher Mail" Margin="0 0 0 5" ></Label>
+                                <TextBox Name="TI_Mail" Text="{Binding TI_Mail, Mode=TwoWay}" Margin="0 0 0 10"></TextBox>
+
+
+                                <Label Name="T_Pass" Content="Teacher Password" Margin="0 0 0 5"></Label>
+                                <TextBox Name="TI_Pass" Text="{Binding TI_Pass, Mode=TwoWay}" Margin="0 0 0 10"></TextBox>
+
+                                <!--<Label Name="T_course" Content="Teacher Course"></Label>
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Name="Math" Content="Math" GroupName="CourseName" IsChecked="{Binding MathChecked}"/>
+                                    <RadioButton Name="Arabic" Content="Arabic" GroupName="CourseName" IsChecked="{Binding ArabicChecked}"/>
+                                    <RadioButton Name="English" Content="English" GroupName="CourseName" IsChecked="{Binding EnglishChecked}"/>
+                                    <RadioButton Name="Science" Content="Science" GroupName="CourseName" IsChecked="{Binding ScienceChecked}"/>
+                                    <RadioButton Name="Computer_science" Content="Computer science" GroupName="CourseName" IsChecked="{Binding ComputerScienceChecked}"/>
+                                    <RadioButton Name="Islamic_Education" Content="Islamic Education" GroupName="CourseName" IsChecked="{Binding IslamicEducationChecked}"/>
+                                </StackPanel>-->
+
+                                <Button Name="T_add" Content="ADD Teatcher" Style="{StaticResource button_login}" Command="{Binding T_add_Click}" Margin="10 190 10 5"></Button>
+                                <Button Name="T_removing" Content="Remove Teacher" Style="{StaticResource button_login}" Command="{Binding T_removing_Click}" CommandParameter="{Binding SelectedTeacher}" Margin="10 5 10 5"></Button>
+                                <!--<Button Name="T_Export" Content="Export To Excel"  Style="{StaticResource button_login}" Click="ST_Export_Click" Margin="10 5 10 5"></Button>-->
+
+
+                            </StackPanel>
+
+                        </Border>
+
+
+
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <DataGrid x:Name="dg" AutoGenerateColumns="False" BorderThickness="0"  ItemsSource="{Binding Teachers}" CanUserSortColumns="True"
+                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" MaxHeight="500"
+                                  SelectedItem="{Binding SelectedTeacher}">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Header="ID" Binding = "{Binding T_ID}"/>
+                                <DataGridTextColumn Header="Teatcher Name" Binding = "{Binding T_Name}"/>
+                                <DataGridTextColumn Header="Teatcher Salary" Binding = "{Binding T_Salary}"/>
+                                <DataGridTextColumn Header="Teatcher Mail" Binding = "{Binding Email}"/>
+                                <DataGridTextColumn Header="Teatcher Password" Binding = "{Binding T_Pass}"/>
+                                <!--<DataGridTextColumn Header="Teacher Course" Binding = "{Binding CRS_Name}"></DataGridTextColumn>-->
+                                <!--<DataGridTextColumn Header="Teacher Evaluation" Binding = "{Binding T_Evaluation}"></DataGridTextColumn>-->
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Border>
+</UserControl>

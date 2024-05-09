@@ -1,0 +1,575 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MySchool_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Academic_year">
+          <Key>
+            <PropertyRef Name="AY_ID" />
+            <PropertyRef Name="T_ID" />
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="AY_ID" Type="int" Nullable="false" />
+          <Property Name="AY_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="T_ID" Type="int" Nullable="false" />
+          <Property Name="ST_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cources">
+          <Key>
+            <PropertyRef Name="CRS_ID" />
+          </Key>
+          <Property Name="CRS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRS_Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="ST_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ST_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="ST_Age" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="ST_Pass" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Student_Cources">
+          <Key>
+            <PropertyRef Name="CRS_ID" />
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="CRS_ID" Type="int" Nullable="false" />
+          <Property Name="ST_ID" Type="int" Nullable="false" />
+          <Property Name="ST_Grade" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="T_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="T_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="T_Salary" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="T_Pass" Type="nvarchar" MaxLength="255" />
+          <Property Name="T_CRS_Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Teacher_Cources">
+          <Key>
+            <PropertyRef Name="CRS_ID" />
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="CRS_ID" Type="int" Nullable="false" />
+          <Property Name="T_ID" Type="int" Nullable="false" />
+          <Property Name="T_Evaluation" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MySchool_DB.dbo.StudentData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StudentData">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+            <PropertyRef Name="ST_Grade" />
+          </Key>
+          <Property Name="ST_ID" Type="int" Nullable="false" />
+          <Property Name="ST_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="ST_Age" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="ST_Pass" Type="nvarchar" MaxLength="255" />
+          <Property Name="AY_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="CRS_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="ST_Grade" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MySchool_DB.dbo.TeacherData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TeacherData">
+          <Key>
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="T_ID" Type="int" Nullable="false" />
+          <Property Name="T_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="T_Salary" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="T_Pass" Type="nvarchar" MaxLength="255" />
+          <Property Name="CRS_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="T_Evaluation" Type="int" />
+        </EntityType>
+        <Association Name="FK_Academic_year_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Academic_year" Type="Self.Academic_year" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Academic_year">
+              <PropertyRef Name="ST_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Academic_year_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Academic_year" Type="Self.Academic_year" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="Academic_year">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Cources_Cources">
+          <End Role="Cources" Type="Self.Cources" Multiplicity="1" />
+          <End Role="Student_Cources" Type="Self.Student_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Principal>
+            <Dependent Role="Student_Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Cources_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Student_Cources" Type="Self.Student_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Student_Cources">
+              <PropertyRef Name="ST_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Cources_Cources">
+          <End Role="Cources" Type="Self.Cources" Multiplicity="1" />
+          <End Role="Teacher_Cources" Type="Self.Teacher_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Principal>
+            <Dependent Role="Teacher_Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Cources_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Teacher_Cources" Type="Self.Teacher_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="Teacher_Cources">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MySchool_DBModelStoreContainer">
+          <EntitySet Name="Academic_year" EntityType="Self.Academic_year" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cources" EntityType="Self.Cources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student_Cources" EntityType="Self.Student_Cources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher_Cources" EntityType="Self.Teacher_Cources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentData" EntityType="Self.StudentData" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [StudentData].[ST_ID] AS [ST_ID], 
+    [StudentData].[ST_Name] AS [ST_Name], 
+    [StudentData].[ST_Age] AS [ST_Age], 
+    [StudentData].[Email] AS [Email], 
+    [StudentData].[ST_Pass] AS [ST_Pass], 
+    [StudentData].[AY_Name] AS [AY_Name], 
+    [StudentData].[CRS_Name] AS [CRS_Name], 
+    [StudentData].[ST_Grade] AS [ST_Grade]
+    FROM [dbo].[StudentData] AS [StudentData]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TeacherData" EntityType="Self.TeacherData" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TeacherData].[T_ID] AS [T_ID], 
+    [TeacherData].[T_Name] AS [T_Name], 
+    [TeacherData].[T_Salary] AS [T_Salary], 
+    [TeacherData].[Email] AS [Email], 
+    [TeacherData].[T_Pass] AS [T_Pass], 
+    [TeacherData].[CRS_Name] AS [CRS_Name], 
+    [TeacherData].[T_Evaluation] AS [T_Evaluation]
+    FROM [dbo].[TeacherData] AS [TeacherData]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Academic_year_Student" Association="Self.FK_Academic_year_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Academic_year" EntitySet="Academic_year" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Academic_year_Teacher" Association="Self.FK_Academic_year_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Academic_year" EntitySet="Academic_year" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Cources_Cources" Association="Self.FK_Student_Cources_Cources">
+            <End Role="Cources" EntitySet="Cources" />
+            <End Role="Student_Cources" EntitySet="Student_Cources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Cources_Student" Association="Self.FK_Student_Cources_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Student_Cources" EntitySet="Student_Cources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Cources_Cources" Association="Self.FK_Teacher_Cources_Cources">
+            <End Role="Cources" EntitySet="Cources" />
+            <End Role="Teacher_Cources" EntitySet="Teacher_Cources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Cources_Teacher" Association="Self.FK_Teacher_Cources_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Teacher_Cources" EntitySet="Teacher_Cources" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MySchool_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Academic_year">
+          <Key>
+            <PropertyRef Name="AY_ID" />
+            <PropertyRef Name="T_ID" />
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="AY_ID" Type="Int32" Nullable="false" />
+          <Property Name="AY_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="T_ID" Type="Int32" Nullable="false" />
+          <Property Name="ST_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Academic_year_Student" FromRole="Academic_year" ToRole="Student" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Academic_year_Teacher" FromRole="Academic_year" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Cources">
+          <Key>
+            <PropertyRef Name="CRS_ID" />
+          </Key>
+          <Property Name="CRS_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRS_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student_Cources" Relationship="Self.FK_Student_Cources_Cources" FromRole="Cources" ToRole="Student_Cources" />
+          <NavigationProperty Name="Teacher_Cources" Relationship="Self.FK_Teacher_Cources_Cources" FromRole="Cources" ToRole="Teacher_Cources" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="ST_ID" Type="Int32" Nullable="false" />
+          <Property Name="ST_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Age" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Pass" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Academic_year" Relationship="Self.FK_Academic_year_Student" FromRole="Student" ToRole="Academic_year" />
+          <NavigationProperty Name="Student_Cources" Relationship="Self.FK_Student_Cources_Student" FromRole="Student" ToRole="Student_Cources" />
+        </EntityType>
+        <EntityType Name="Student_Cources">
+          <Key>
+            <PropertyRef Name="CRS_ID" />
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="CRS_ID" Type="Int32" Nullable="false" />
+          <Property Name="ST_ID" Type="Int32" Nullable="false" />
+          <Property Name="ST_Grade" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cources" Relationship="Self.FK_Student_Cources_Cources" FromRole="Student_Cources" ToRole="Cources" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_Cources_Student" FromRole="Student_Cources" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="T_ID" Type="Int32" Nullable="false" />
+          <Property Name="T_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="T_Salary" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="T_Pass" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Academic_year" Relationship="Self.FK_Academic_year_Teacher" FromRole="Teacher" ToRole="Academic_year" />
+          <NavigationProperty Name="Teacher_Cources" Relationship="Self.FK_Teacher_Cources_Teacher" FromRole="Teacher" ToRole="Teacher_Cources" />
+          <Property Name="T_CRS_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Teacher_Cources">
+          <Key>
+            <PropertyRef Name="CRS_ID" />
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="CRS_ID" Type="Int32" Nullable="false" />
+          <Property Name="T_ID" Type="Int32" Nullable="false" />
+          <Property Name="T_Evaluation" Type="Int32" />
+          <NavigationProperty Name="Cources" Relationship="Self.FK_Teacher_Cources_Cources" FromRole="Teacher_Cources" ToRole="Cources" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Teacher_Cources_Teacher" FromRole="Teacher_Cources" ToRole="Teacher" />
+        </EntityType>
+        <Association Name="FK_Academic_year_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Academic_year" Type="Self.Academic_year" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Academic_year">
+              <PropertyRef Name="ST_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Academic_year_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Academic_year" Type="Self.Academic_year" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="Academic_year">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Cources_Cources">
+          <End Role="Cources" Type="Self.Cources" Multiplicity="1" />
+          <End Role="Student_Cources" Type="Self.Student_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Principal>
+            <Dependent Role="Student_Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Cources_Cources">
+          <End Role="Cources" Type="Self.Cources" Multiplicity="1" />
+          <End Role="Teacher_Cources" Type="Self.Teacher_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Principal>
+            <Dependent Role="Teacher_Cources">
+              <PropertyRef Name="CRS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Cources_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Student_Cources" Type="Self.Student_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Student_Cources">
+              <PropertyRef Name="ST_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher_Cources_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Teacher_Cources" Type="Self.Teacher_Cources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="T_ID" />
+            </Principal>
+            <Dependent Role="Teacher_Cources">
+              <PropertyRef Name="T_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MySchool_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Academic_year" EntityType="Self.Academic_year" />
+          <EntitySet Name="Cources" EntityType="Self.Cources" />
+          <EntitySet Name="Student" EntityType="Self.Student" />
+          <EntitySet Name="Student_Cources" EntityType="Self.Student_Cources" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" />
+          <EntitySet Name="Teacher_Cources" EntityType="Self.Teacher_Cources" />
+          <AssociationSet Name="FK_Academic_year_Student" Association="Self.FK_Academic_year_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Academic_year" EntitySet="Academic_year" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Academic_year_Teacher" Association="Self.FK_Academic_year_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Academic_year" EntitySet="Academic_year" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Cources_Cources" Association="Self.FK_Student_Cources_Cources">
+            <End Role="Cources" EntitySet="Cources" />
+            <End Role="Student_Cources" EntitySet="Student_Cources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Cources_Cources" Association="Self.FK_Teacher_Cources_Cources">
+            <End Role="Cources" EntitySet="Cources" />
+            <End Role="Teacher_Cources" EntitySet="Teacher_Cources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Cources_Student" Association="Self.FK_Student_Cources_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Student_Cources" EntitySet="Student_Cources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher_Cources_Teacher" Association="Self.FK_Teacher_Cources_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Teacher_Cources" EntitySet="Teacher_Cources" />
+          </AssociationSet>
+          <EntitySet Name="TeacherData" EntityType="MySchool_DBModel.TeacherData" />
+          <EntitySet Name="StudentData" EntityType="MySchool_DBModel.StudentData" />
+        </EntityContainer>
+        <EntityType Name="TeacherData">
+          <Key>
+            <PropertyRef Name="T_ID" />
+          </Key>
+          <Property Name="T_ID" Type="Int32" Nullable="false" />
+          <Property Name="T_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="T_Salary" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="T_Pass" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CRS_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="T_Evaluation" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StudentData">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+            <PropertyRef Name="ST_Grade" />
+          </Key>
+          <Property Name="ST_ID" Type="Int32" Nullable="false" />
+          <Property Name="ST_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Age" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Pass" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AY_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CRS_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ST_Grade" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MySchool_DBModelStoreContainer" CdmEntityContainer="MySchool_DBEntities">
+          <EntitySetMapping Name="Academic_year">
+            <EntityTypeMapping TypeName="MySchool_DBModel.Academic_year">
+              <MappingFragment StoreEntitySet="Academic_year">
+                <ScalarProperty Name="AY_ID" ColumnName="AY_ID" />
+                <ScalarProperty Name="AY_Name" ColumnName="AY_Name" />
+                <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+                <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cources">
+            <EntityTypeMapping TypeName="MySchool_DBModel.Cources">
+              <MappingFragment StoreEntitySet="Cources">
+                <ScalarProperty Name="CRS_ID" ColumnName="CRS_ID" />
+                <ScalarProperty Name="CRS_Name" ColumnName="CRS_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="MySchool_DBModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+                <ScalarProperty Name="ST_Age" ColumnName="ST_Age" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ST_Pass" ColumnName="ST_Pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student_Cources">
+            <EntityTypeMapping TypeName="MySchool_DBModel.Student_Cources">
+              <MappingFragment StoreEntitySet="Student_Cources">
+                <ScalarProperty Name="CRS_ID" ColumnName="CRS_ID" />
+                <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />
+                <ScalarProperty Name="ST_Grade" ColumnName="ST_Grade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MySchool_DBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="MySchool_DBModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="T_CRS_Name" ColumnName="T_CRS_Name" />
+                <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+                <ScalarProperty Name="T_Name" ColumnName="T_Name" />
+                <ScalarProperty Name="T_Salary" ColumnName="T_Salary" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="T_Pass" ColumnName="T_Pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher_Cources">
+            <EntityTypeMapping TypeName="MySchool_DBModel.Teacher_Cources">
+              <MappingFragment StoreEntitySet="Teacher_Cources">
+                <ScalarProperty Name="CRS_ID" ColumnName="CRS_ID" />
+                <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+                <ScalarProperty Name="T_Evaluation" ColumnName="T_Evaluation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherData">
+            <EntityTypeMapping TypeName="MySchool_DBModel.TeacherData">
+              <MappingFragment StoreEntitySet="TeacherData">
+                <ScalarProperty Name="T_Evaluation" ColumnName="T_Evaluation" />
+                <ScalarProperty Name="CRS_Name" ColumnName="CRS_Name" />
+                <ScalarProperty Name="T_Pass" ColumnName="T_Pass" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="T_Salary" ColumnName="T_Salary" />
+                <ScalarProperty Name="T_Name" ColumnName="T_Name" />
+                <ScalarProperty Name="T_ID" ColumnName="T_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentData">
+            <EntityTypeMapping TypeName="MySchool_DBModel.StudentData">
+              <MappingFragment StoreEntitySet="StudentData">
+                <ScalarProperty Name="ST_Grade" ColumnName="ST_Grade" />
+                <ScalarProperty Name="CRS_Name" ColumnName="CRS_Name" />
+                <ScalarProperty Name="AY_Name" ColumnName="AY_Name" />
+                <ScalarProperty Name="ST_Pass" ColumnName="ST_Pass" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ST_Age" ColumnName="ST_Age" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+                <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
